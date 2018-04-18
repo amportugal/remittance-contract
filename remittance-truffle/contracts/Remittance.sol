@@ -2,7 +2,8 @@ pragma solidity ^0.4.2;
 
 contract Remittance {
 
-    bytes32  private solution;
+    bytes32  private solution; //solution is a keccak256 hash to both otp1 and otp2 so that
+                               // only 32 bits is stored as the solution to the puzzle
     address public owner;
     uint    public amountToSend;
 
