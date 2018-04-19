@@ -7,19 +7,26 @@ contract Remittance {
     address public owner;
     uint    public amountToSend;
 
-    function Remittance(string otp1, string otp2) public payable{
+    event LogWithdrawal(uint amountToSend, address receiverOfAmount);
+
+    function Remittance(bytes32 _solution) public payable{
         require(msg.value > 0);
 
         owner = msg.sender;
         amountToSend = msg.value;
-        solution = keccak256(otp1, otp2);
+        solution = _solution;
     }
 
     function yieldAmount(string otp1, string otp2) public returns(bool){
         require(amountToSend > 0);
         require(keccak256(otp1, otp2) == solution);
 
-        msg.sender.transfer(amountToSend);
+        uint _amountToSend = amountToSend;
+        amountToSend = 0;
+
+        LogWithdrawal(_amountToSend, msg.sender);
+
+        msg.sender.transfer(_amountToSend);
 
         return true;
     }
