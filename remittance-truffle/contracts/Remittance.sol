@@ -7,7 +7,7 @@ contract Remittance {
     address public owner;
     uint    public amountToSend;
 
-    event LogWithdrawal(uint amountToSend, address receiverOfAmount);
+    //event LogWithdrawal(uint amountToSend, address receiverOfAmount);
 
     function Remittance(bytes32 _solution) public payable{
         require(msg.value > 0);
@@ -24,7 +24,7 @@ contract Remittance {
         uint _amountToSend = amountToSend;
         amountToSend = 0;
 
-        LogWithdrawal(_amountToSend, msg.sender);
+        //LogWithdrawal(_amountToSend, msg.sender);
 
         msg.sender.transfer(_amountToSend);
 
