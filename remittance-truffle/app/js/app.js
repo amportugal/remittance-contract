@@ -60,6 +60,7 @@ const attemptWithdraw = function() {
                 if(!$("#password1").val() || !$("#password2").val()) {
                     throw new Error("Passwords must both be filled in!");
                 }
+                console.log("Calculated hash:", web3.sha3($("#password1").val() + $("#password2").val()));
                 instance = _instance;
                 /* Call simulation */
                 return _instance.yieldAmount.call(

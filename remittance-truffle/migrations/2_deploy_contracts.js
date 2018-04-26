@@ -9,7 +9,7 @@ if (typeof web3 !== 'undefined') {
 }
 
 module.exports = function(deployer, network, accounts) {
-  deployer.deploy(Remittance, web3.sha3("carolpass" + "bobpass"), {from: accounts[0], value: 10000000})
+  deployer.deploy(Remittance, accounts[1], web3.sha3("carolpass" + "bobpass"), {from: accounts[0], value: 10000000})
           .then(() => {
             console.log("Deployed Remittance contract\nowner ==> (", accounts[0], ")\n"
                                                     + "hash ==> " + web3.sha3("carolpass" + "bobpass"))
