@@ -9,9 +9,27 @@ if (typeof web3 !== 'undefined') {
 }
 
 module.exports = function(deployer, network, accounts) {
-  deployer.deploy(Remittance, accounts[1], web3.sha3("carolpass" + "bobpass"), {from: accounts[0], value: 10000000})
+  var remittanceInstance;
+  deployer.deploy(Remittance, {from: accounts[0]})
           .then(() => {
-            console.log("Deployed Remittance contract\nowner ==> (", accounts[0], ")\n"
-                                                    + "hash ==> " + web3.sha3("carolpass" + "bobpass"))
+            console.log("Deployed Remittance contract\nowner ==> (", accounts[0], ")");
+
+            return Remittance.deployed();
+          })
+          .then(function(_instance) {
+            remittanceInstance = _instance;
+
+            console.log("Calculating solution to upload...");
+
+            return _instance.calculateHash.call(accounts[1], "carolPass", "bobPass");
+          })
+          .then(function(_solution) {
+            console.log("Calculated solution succesfully!");
+
+            console.log("Uploading solution for account:", accounts[1]);
+
+            remittanceInstance.uploadSolution(_solution, {from: accounts[0], value: 10000000})
+
+            console.log("Uploaded solution successfully!");
           });
 };
