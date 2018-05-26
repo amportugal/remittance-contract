@@ -17,10 +17,11 @@ contract Remittance {
 
     function yieldAmount(string otp1, string otp2) public returns(bool){
         require(amountToSend > 0);
-        require(keccak256(msg.sender, otp1, otp2) == solution);
+        require(calculateHash(msg.sender, otp1, otp2) == solution);
 
         uint _amountToSend = amountToSend;
         amountToSend = 0;
+        solution = bytes32(0);
 
         LogWithdrawal(_amountToSend, msg.sender);
 
@@ -36,6 +37,7 @@ contract Remittance {
         require(owner == msg.sender);
         require(msg.value > 0);
         require(_solution > 0);
+        require(solution == 0);
 
         amountToSend = msg.value;
         solution = _solution;
