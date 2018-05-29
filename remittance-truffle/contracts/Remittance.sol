@@ -45,9 +45,9 @@ contract Remittance {
 
     function calculateHash(address remittedTo, string otp1, string otp2) 
         public 
-        pure 
+        view 
         returns(bytes32) 
     {
-        return keccak256(remittedTo, otp1, otp2);
+        return keccak256(remittedTo, otp1, otp2, address(this));
     }
 }
