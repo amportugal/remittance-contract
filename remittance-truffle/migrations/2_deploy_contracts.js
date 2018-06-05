@@ -28,7 +28,7 @@ module.exports = function(deployer, network, accounts) {
 
             console.log("Uploading solution for account:", accounts[1]);
 
-            remittanceInstance.uploadSolution(_solution, {from: accounts[0], value: 10000000})
+            remittanceInstance.uploadSolution(_solution, 20, {from: accounts[0], value: 10000000})
 
             console.log("Uploaded solution successfully!");
           });
